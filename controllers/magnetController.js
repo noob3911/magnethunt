@@ -22,7 +22,7 @@ class MagnetController extends Controller {
          //  };
          //  this.sendResponse(combinedResults);
 
-         const [bitSearchResults, torren1337Results] = await Promise.all([
+         const [torren1337Results, bitSearchResults] = await Promise.all([
             torren1337(search).catch((error) => {
                console.error("Error from torren1337:", error);
                return [];
@@ -32,13 +32,13 @@ class MagnetController extends Controller {
                return [];
             }),
          ]);
+         const validTorren1337Results = torren1337Results?.filter((result) => {
+            return result.Magnet && result.Magnet.startsWith("magnet:");
+         });
 
-         const combinedResults = (bitSearchResults || []).concat(torren1337Results || []);
-
+         const combinedResults = [...(validTorren1337Results || []), ...(bitSearchResults || [])];
          combinedResults.sort((a, b) => b.seeders - a.seeders);
-
          const top20Results = combinedResults.slice(0, 20);
-
          this.sendResponse(top20Results);
       } catch (error) {
          console.error(error);
