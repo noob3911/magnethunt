@@ -23,8 +23,8 @@ async function bitSearch(query) {
          let torrent = {
             Name: $(element).find(".info .title").text(),
             Size: $(element).find(".info div div").eq(3).text(),
-            Seeders: $(element).find(".info div div").eq(3).text().trim(),
-            Leechers: $(element).find(".info div div").eq(4).text().trim(),
+            Seeders: $(element).find(".info div div").eq(4).text().trim(),
+            Leechers: $(element).find(".info div div").eq(5).text().trim(),
             Magnet: $(element).find(".links a").eq(1).attr("href"),
          };
          ALLTORRENT.push(torrent);
