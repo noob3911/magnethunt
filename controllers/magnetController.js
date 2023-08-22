@@ -45,13 +45,7 @@ class MagnetController extends Controller {
          const validTorren1337Results = torren1337Results?.filter((result) => {
             return result.Magnet && result.Magnet.startsWith("magnet:");
          });
-
-
-         // const combinedResults = [...(validTorren1337Results || []), ...(torResults || [])];
-         // const combo =[...combinedResults, ...(bitSearchResults || []), ...(torProjectResults||[])]
-         // combo.sort((a, b) => b.seeders - a.seeders);
-         // const top20Results = combo.slice(0, 25);
-
+      
          const combinedResults = [
             ...(validTorren1337Results || []),
             ...(torResults || []),
@@ -61,9 +55,9 @@ class MagnetController extends Controller {
           
           combinedResults.sort((a, b) => b.seeders - a.seeders);
           
-          const top25Results = combinedResults.slice(0, 25);
+          const top30Results = combinedResults.slice(0, 30);
 
-         this.sendResponse(top25Results);
+         this.sendResponse(top30Results);
 
       } catch (error) {
          console.error(error);
