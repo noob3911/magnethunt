@@ -276,15 +276,23 @@ const axios = require("axios");
 const https = require('https'); 
 const http = require('http'); 
 
-const proxyUrl = 'http://fppopsoz-rotate:3lu3q8k2xfwr@p.webshare.io:80';
+require("dotenv").config();
 
-// Create an Axios instance with the proxy
+const info = {
+  hostname: process.env.HOST_NAME,
+  port: process.env.HOST_PORT,
+  userId: process.env.HOST_USERID,
+  password: process.env.HOST_PASS
+};
+
+const proxyUrl = `socks5h://${info.userId}-rotate:${info.password}@${info.hostname}:${info.port}`;
+
 const axiosInstance = axios.create({
-  proxy: false, // Disable built-in Axios proxy
-  httpsAgent: new https.Agent({ // For HTTPS requests
+  proxy: false, 
+  httpsAgent: new https.Agent({ 
     proxy: proxyUrl,
   }),
-  httpAgent: new http.Agent({ // For HTTP requests
+  httpAgent: new http.Agent({ 
     proxy: proxyUrl,
   }),
 });
