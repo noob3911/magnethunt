@@ -1,12 +1,28 @@
 const cheerio = require("cheerio");
 const axios = require("axios");
 
+const https = require('https'); 
+const http = require('http'); 
+
+const proxyUrl = 'http://fppopsoz-rotate:3lu3q8k2xfwr@p.webshare.io:80';
+
+// Create an Axios instance with the proxy
+const axiosInstance = axios.create({
+  proxy: false, // Disable built-in Axios proxy
+  httpsAgent: new https.Agent({ // For HTTPS requests
+    proxy: proxyUrl,
+  }),
+  httpAgent: new http.Agent({ // For HTTP requests
+    proxy: proxyUrl,
+  }),
+});
+
 async function bitSearch(query) {
    var ALLTORRENT = [];
    const url = `https://bitsearch.to/search?q=${query}&sort=seeders`;
    let html;
    try {
-      html = await axios.get(
+      html = await axiosInstance.get(
          url,
          // (headers = {
          //    "User-Agent": "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/115.0.5790.170 Safari/537.36",
