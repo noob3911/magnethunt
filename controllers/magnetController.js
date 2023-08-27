@@ -42,6 +42,7 @@ class MagnetController extends Controller {
                return [];
             }),
          ]);
+
          const validTorren1337Results = torren1337Results?.filter((result) => {
             return result.Magnet && result.Magnet.startsWith("magnet:");
          });
