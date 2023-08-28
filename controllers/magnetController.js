@@ -1,8 +1,8 @@
 const Controller = require("./controller");
 const torren1337 = require("../services/1337x");
 const bitSearch = require("../services/bitSearch");
-const torLock = require('../services/torlock')
-const torProject = require('../services/torproject')
+const torLock = require("../services/torlock");
+const torProject = require("../services/torproject");
 
 class MagnetController extends Controller {
    constructor(response) {
@@ -46,20 +46,29 @@ class MagnetController extends Controller {
          const validTorren1337Results = torren1337Results?.filter((result) => {
             return result.Magnet && result.Magnet.startsWith("magnet:");
          });
-      
+
+         const validtorProjectResults = torProjectResults?.filter((result) => {
+            return result.Magnet && result.Magnet.startsWith("magnet:");
+         });
+         const validtortorResults = torResults?.filter((result) => {
+            return result.Magnet && result.Magnet.startsWith("magnet:");
+         });
+         const validbitSearchResults = bitSearchResults?.filter((result) => {
+            return result.Magnet && result.Magnet.startsWith("magnet:");
+         });
+
          const combinedResults = [
             ...(validTorren1337Results || []),
-            ...(torResults || []),
-            ...(bitSearchResults || []),
-            ...(torProjectResults || []),
-          ];
-          
-          combinedResults.sort((a, b) => b.seeders - a.seeders);
-          
-          const top30Results = combinedResults.slice(0, 20);
+            ...(validtortorResults || []),
+            ...(validbitSearchResults || []),
+            ...(validtorProjectResults || []),
+         ];
+
+         combinedResults.sort((a, b) => b.seeders - a.seeders);
+
+         const top30Results = combinedResults.slice(0, 20);
 
          this.sendResponse(top30Results);
-
       } catch (error) {
          console.error(error);
       }
